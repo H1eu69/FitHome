@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
+<?strxml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <style name="button_1">
         <item name="android:layout_width">256dp</item>
         <item name="android:layout_height">48dp</item>
@@ -20,5 +20,27 @@
         <item name="android:textSize">12sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:text">Continue as guest?</item>
     </style>
+
+    <style name="TextInputLayout_1.Style" parent="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:layout_width">256dp</item>
+        <item name="android:layout_height">55dp</item>
+        <item name="boxCornerRadiusBottomEnd">8dp</item>
+        <item name="boxCornerRadiusBottomStart">8dp</item>
+        <item name="boxCornerRadiusTopEnd">8dp</item>
+        <item name="boxCornerRadiusTopStart">8dp</item>
+        <item name="android:textColor">#A0A3BD</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:inputType">text</item>
+        <item name="android:hint">Phone number</item>
+    </style>
+
+    <style name="TextInput_1.Theme" parent="">
+        <item name="colorPrimary">#A0A3BD</item>
+    </style>
+
 </resources>

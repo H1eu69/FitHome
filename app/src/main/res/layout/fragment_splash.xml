@@ -13,6 +13,7 @@
         android:layout_height="match_parent"
         android:alpha=".25"
         android:scaleType="centerCrop"
+        android:src="@drawable/splash"
         />
 
 </FrameLayout>

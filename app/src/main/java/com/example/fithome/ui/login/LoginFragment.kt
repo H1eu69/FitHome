@@ -5,15 +5,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import androidx.viewpager2.widget.ViewPager2
 import com.example.fithome.R
+import com.example.fithome.databinding.FragmentLoginBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
-private lateinit var viewPager: ViewPager2
 
 /**
  * A simple [Fragment] subclass.
@@ -24,6 +25,13 @@ class LoginFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+
+    private var _binding: FragmentLoginBinding? = null
+    // This property is only valid between onCreateView and
+// onDestroyView.
+    private val binding get() = _binding!!
+    private val viewModel: ButtonStateViewModel by viewModels()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,8 +45,8 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_login, container, false)
+        _binding = FragmentLoginBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     companion object {
@@ -63,19 +71,32 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewPager = view.findViewById(R.id.loginViewPager)
-
         // The pager adapter, which provides the pages to the view pager widget.
-        val pagerAdapter = ScreenSlidePagerAdapter(this)
-        viewPager.adapter = pagerAdapter
-        viewPager.isUserInputEnabled = false
+        setupViewPager()
+        observeViewModel()
+    }
+
+    private fun observeViewModel()
+    {
+        viewModel.isLoginClicked.observe(viewLifecycleOwner) {
+            findNavController().navigate(R.id.action_loginFragment_to_loginFragment2)
+        }
+        viewModel.isGuestClicked.observe(viewLifecycleOwner){
+            binding.viewPager?.setCurrentItem(binding.viewPager!!.currentItem + 1, true)
+        }
+    }
+
+    private fun setupViewPager()
+    {
+        binding.viewPager?.adapter = ScreenSlidePagerAdapter(this)
+        binding.viewPager?.isUserInputEnabled = false
     }
 
     private inner class ScreenSlidePagerAdapter(fa: Fragment) : FragmentStateAdapter(fa) {
-        override fun getItemCount(): Int = 3
+        override fun getItemCount(): Int = 2
 
         override fun createFragment(position: Int) : Fragment{
-            if(position == 1)
+            if(position == 0)
                 return LoginButtonPager()
             return LoginLoadingPager()
         }
